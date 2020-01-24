@@ -1,90 +1,3 @@
-//LiFF
-window.onload = function() {
-    const useNodeJS = false;   // if you are not using a node server, set this value to false
-    const defaultLiffId = "1653778664-Zd4y4EQp";   // change the default LIFF value if you are not using a node server
-
-    // DO NOT CHANGE THIS
-    let myLiffId = "";
-
-    // if node is used, fetch the environment variable and pass it to the LIFF method
-    // otherwise, pass defaultLiffId
-    if (useNodeJS) {
-        fetch('/send-id')
-            .then(function(reqResponse) {
-                return reqResponse.json();
-            })
-            .then(function(jsonResponse) {
-                myLiffId = jsonResponse.id;
-                initializeLiffOrDie(myLiffId);
-            })
-            .catch(function(error) {
-
-            });
-    } else {
-        myLiffId = defaultLiffId;
-        initializeLiffOrDie(myLiffId);
-    }
-};
-
-/**
-* Check if myLiffId is null. If null do not initiate liff.
-* @param {string} myLiffId The LIFF ID of the selected element
-*/
-function initializeLiffOrDie(myLiffId) {
-    if (!myLiffId) {
-
-    } else {
-        initializeLiff(myLiffId);
-    }
-}
-
-/**
-* Initialize LIFF
-* @param {string} myLiffId The LIFF ID of the selected element
-*/
-function initializeLiff(myLiffId) {
-    liff
-        .init({
-            liffId: myLiffId
-        })
-        .then(() => {
-            // start to use LIFF's api
-            initializeApp();
-        })
-        .catch((err) => {
-
-        });
-}
-
-/**
- * Initialize the app by calling functions handling individual app components
- */
-function initializeApp() {
-    registerButtonHandlers();
-}
-
-function registerButtonHandlers() {
-    // sendMessages call
-    document.getElementById('dwnld').addEventListener('click', function() {
-		var dataURL = canvas.toDataURL('image/png');
-        if (!liff.isInClient()) {
-            sendAlertIfNotInClient();
-        } else {
-            liff.sendMessages([{
-                "type": "image",
-                "originalContentUrl": dataURL
-            }]).catch(function(error) {
-                window.alert('Error sending message: ' + error);
-            });
-        }
-	});
-
-/**
-* Alert the user if LIFF is opened in an external browser and unavailable buttons are tapped
-*/
-function sendAlertIfNotInClient() {
-    alert('This button is unavailable as LIFF is currently being opened in an external browser.');
-}
 
 //Create canvas
 var canvas = document.getElementById('myCanvas');
@@ -375,4 +288,91 @@ function triangle() {
 	canvas.addEventListener('mouseout', rectMouseout, false);
 };
 
+//LiFF
+window.onload = function() {
+    const useNodeJS = false;   // if you are not using a node server, set this value to false
+    const defaultLiffId = "1653778664-Zd4y4EQp";   // change the default LIFF value if you are not using a node server
+
+    // DO NOT CHANGE THIS
+    let myLiffId = "";
+
+    // if node is used, fetch the environment variable and pass it to the LIFF method
+    // otherwise, pass defaultLiffId
+    if (useNodeJS) {
+        fetch('/send-id')
+            .then(function(reqResponse) {
+                return reqResponse.json();
+            })
+            .then(function(jsonResponse) {
+                myLiffId = jsonResponse.id;
+                initializeLiffOrDie(myLiffId);
+            })
+            .catch(function(error) {
+
+            });
+    } else {
+        myLiffId = defaultLiffId;
+        initializeLiffOrDie(myLiffId);
+    }
+};
+
+/**
+* Check if myLiffId is null. If null do not initiate liff.
+* @param {string} myLiffId The LIFF ID of the selected element
+*/
+function initializeLiffOrDie(myLiffId) {
+    if (!myLiffId) {
+
+    } else {
+        initializeLiff(myLiffId);
+    }
+}
+
+/**
+* Initialize LIFF
+* @param {string} myLiffId The LIFF ID of the selected element
+*/
+function initializeLiff(myLiffId) {
+    liff
+        .init({
+            liffId: myLiffId
+        })
+        .then(() => {
+            // start to use LIFF's api
+            initializeApp();
+        })
+        .catch((err) => {
+
+        });
+}
+
+/**
+ * Initialize the app by calling functions handling individual app components
+ */
+function initializeApp() {
+    registerButtonHandlers();
+}
+
+function registerButtonHandlers() {
+    // sendMessages call
+    document.getElementById('dwnld').addEventListener('click', function() {
+		var dataURL = canvas.toDataURL('image/png');
+        if (!liff.isInClient()) {
+            sendAlertIfNotInClient();
+        } else {
+            liff.sendMessages([{
+                "type": "image",
+                "originalContentUrl": dataURL
+            }]).catch(function(error) {
+                window.alert('Error sending message: ' + error);
+            });
+        }
+	});
+
+/**
+* Alert the user if LIFF is opened in an external browser and unavailable buttons are tapped
+*/
+function sendAlertIfNotInClient() {
+    alert('This button is unavailable as LIFF is currently being opened in an external browser.');
+}
 
