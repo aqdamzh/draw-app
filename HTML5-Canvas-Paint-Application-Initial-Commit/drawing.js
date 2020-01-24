@@ -1,4 +1,3 @@
-
 //Create canvas
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
@@ -368,6 +367,7 @@ function registerButtonHandlers() {
             });
         }
 	});
+}
 
 /**
 * Alert the user if LIFF is opened in an external browser and unavailable buttons are tapped
@@ -375,4 +375,5 @@ function registerButtonHandlers() {
 function sendAlertIfNotInClient() {
     alert('This button is unavailable as LIFF is currently being opened in an external browser.');
 }
+
 
